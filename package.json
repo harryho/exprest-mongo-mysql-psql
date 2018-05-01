@@ -1,0 +1,24 @@
+{
+  "name": "express",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "start:mysql": "DB=mysql node ./bin/www",
+    "start:postgresql": "DB=postgresql node ./bin/www",
+    "start:mongodb": "DB=mongodb node ./bin/www"
+  },
+  "dependencies": {
+    "bluebird": "~3.5.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "mongodb": "^3.0.6",
+    "morgan": "~1.9.0",
+    "mysql": "^2.15.0",
+    "pg-monitor": "~0.8.5",
+    "pg-promise": "~7.5.3"
+  }
+}
