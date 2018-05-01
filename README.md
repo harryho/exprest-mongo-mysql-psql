@@ -133,7 +133,61 @@ mongoimport --db sample --collection users --drop --jsonArray --file ~/db/users.
 
 
 ```
-git clone 
+git clone https://github.com/harryho/exprest-mongo-mysql-psql.git
+
+cd exprest-mongo-mysql-psql 
+
+# Install packages with npm or yarn
+npm i 
+
+npm run
+
 ```
 
+### You can run any API you preferred  e.g. MongoDB
 
+**Please make sure MongoDB is running on your OS**
+
+```
+# Check mongod service 
+
+systemctl status mongod
+
+
+npm run start:mongodb
+
+## You will see following information
+# Server is running on 127.0.0.1:3001, DB:  mongodb
+
+
+# You can use wget, curl or browser to test the URL: http://127.0.0.1:3001/api/v1/users
+
+
+```
+
+### Test API wtih CURL
+
+
+
+```
+curl -X GET http://127.0.0.1:3001/api/v1/users
+
+# You will see some data as below
+
+...
+
+  { _id: 47,
+    email: 'Harrison.Puett@yahoo.com',
+    password: 'ff9e460aaca39a2c3bbd68043047826a',
+    details: { sex: 'M' },
+    created_at: '2009-07-22T01:20:00+10:00',
+    deleted_at: null },
+  { _id: 48,
+    email: 'Granville.Hedgpeth@gmail.com',
+    password: '87f0bfd98e2a9b8d30bc1309936744cb',
+    details: null,
+    created_at: '2009-08-04T00:54:00+10:00',
+    deleted_at: null },
+...
+
+```
