@@ -25,14 +25,14 @@ psql -U postgres
 
 # Create a dump databbase
 curl -L -O http://cl.ly/173L141n3402/download/example.dump
-createdb pgguide
-pg_restore --no-owner --dbname pgguide example.dump
-psql --dbname pgguide
+createdb sample
+pg_restore --no-owner --dbname sample example.dump
+psql --dbname sample
 
 psql 
 
 # Rename database -- use double quote 
-ALTER database "pgguide" rename to "sample"
+ALTER database "sample" rename to "sample"
 ```
 
 * export the database to sql file
@@ -130,10 +130,24 @@ mongoimport --db sample --collection users --drop --jsonArray --file ~/db/users.
 
 ## Run & Test the API
 
-
+#### Run the API
 
 ```
-git clone 
+git clone https://github.com/harryho/exprest-mongo-mysql-psql
+cd exprest-mongo-mysql-psql
+npm i
+npm run 
+
+# Test with mysql
+npm run start:mysql
+
+```
+
+
+#### Test the API
+
+```
+curl -X GET http://localhost:3001/api/v1/users
 ```
 
 

@@ -20,6 +20,7 @@ global.MONGODB = "mongodb";
 var app = express();
 
 var database = process.env.DB || "";
+var port = process.env.PORT || "3001";
 
 console.log(database);
 
@@ -36,40 +37,42 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 const mongoURI = 'mongodb://localhost:27017/sample';
-var mongodb ;
-mongoClient.connect(mongoURI, (err, client)=>{
-  if (err) return console.log(err)
-  mongodb = client.db('sample')
-});
+var mongodb;
+global.dbContext = null;
 
 //Database dbContext
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   global.db = database;
-  switch (database) {
-    case MYSQL:
-      var mysqlContext = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "toor",
-        database: "sample"
-      });
-      global.dbContext = mysqlContext;
-      dbContext.connect();
-      break;
+  if (!global.dbContext) {
+    switch (database) {
+      case MYSQL:
+        var mysqlContext = mysql.createConnection({
+          host: "localhost",
+          user: "root",
+          password: "toor",
+          database: "sample"
+        });
+        global.dbContext = mysqlContext;
+        dbContext.connect();
+        break;
 
-    case POSTGRESSQL:
-      const config = 'postgres://postgres:postgres@localhost:5432/sample';
-      var postgresContext = pgp(config);
-      global.dbContext = postgresContext;
-      break;
-    case MONGODB:
-     
-      // var postgresContext =
-      global.dbContext =  mongodb
-      
-      break;
-    default:
-      throw new Error("Database config is missing!!!");
+      case POSTGRESSQL:
+        const config = 'postgres://postgres:postgres@localhost:5432/sample';
+        var postgresContext = pgp(config);
+        global.dbContext = postgresContext;
+        break;
+      case MONGODB:
+        mongoClient.connect(mongoURI, (err, client) => {
+          if (err) return console.log(err)
+          mongodb = client.db('sample')
+        });
+        // var postgresContext =
+        global.dbContext = mongodb
+
+        break;
+      default:
+        throw new Error("Database config is missing!!!");
+    }
   }
   next();
 });
@@ -77,13 +80,15 @@ app.use(function(req, res, next) {
 app.use("/", index);
 app.use("/api/v1/users", users);
 
+// console.log( server is listening on port ${port} \n\n")
+console.log(`URL: http://localhost:${port}/api/v1/users`)
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
@@ -95,4 +100,4 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 var server = http.createServer(app);
-server.listen(3001);
+server.listen(port);
