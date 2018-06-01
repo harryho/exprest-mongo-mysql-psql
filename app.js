@@ -22,9 +22,7 @@ var app = express();
 var database = process.env.DB || "";
 var port = process.env.PORT || "3001";
 
-console.log(`\n Server is running on 127.0.0.1:3001, DB:  ${database}`);
-
-console.log("\n\n You can use wget, curl or browser to test the URL: http://127.0.0.1:3001/api/v1/users");
+console.log(`\n API is running on 127.0.0.1:3001, DB:  ${database}`);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
